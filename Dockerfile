@@ -1,5 +1,4 @@
-# Use the official Node.js image
-FROM node:18
+FROM node:18-alpine
 
 # Set the working directory in the container
 WORKDIR /app
@@ -12,6 +11,9 @@ RUN npm install
 
 # Copy the entire project
 COPY . .
+
+# Set Node.js environment variable to fix OpenSSL error
+ENV NODE_OPTIONS="--openssl-legacy-provider"
 
 # Build the application for production
 RUN npm run build
