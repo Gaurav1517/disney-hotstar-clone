@@ -2,9 +2,8 @@
 
 Hotstar-Disney+ UI clone using ReactJS
 ---
-Snap
+
 ![snap](src/images/snap.png)
-![snap-home](src/images/snap-home.png)
 
 
 Most Simple Project you can do when ypu start studying ReactJS.It is only made using ReactJS.
