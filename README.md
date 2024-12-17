@@ -34,13 +34,11 @@ Hotstar-Disney+ UI clone using ReactJS
 <a href="https://www.clipartmax.com/middle/m2H7K9i8N4Z5G6Z5_docker-compose-logo-docker/" target="_blank">
   <img src="https://neilkillen.com/wp-content/uploads/2020/03/docker-compose.png" alt="Docker Compose Logo" width="100">
 </a>
-<!-- <a href="https://www.openssl.org/">
+<a href="https://www.openssl.org/">
   <img src="https://www.svgrepo.com/show/473737/openssl.svg" alt="OpenSSL" width="100">
-</a> -->
+</a>
 
 
-
-Most Simple Project you can do when ypu start studying ReactJS.It is only made using ReactJS.
 
 ## Installation
 
