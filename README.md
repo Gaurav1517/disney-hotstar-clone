@@ -1,7 +1,7 @@
 # Disney Hotstar UI Clone
 
 Hotstar-Disney+ UI clone using ReactJS
-
+![snap](src/images/snap.png)
 Most Simple Project you can do when ypu start studying ReactJS.It is only made using ReactJS.
 
 ## Installation
@@ -19,9 +19,7 @@ npm start
 
 ```
 
-## Website link
 
-https://hotstar-88d5e.web.app
 
 
 # Run this code if getting error from above command  run this command to resolve error. 
