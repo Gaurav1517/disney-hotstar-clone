@@ -37,7 +37,7 @@ This is a simple Disney Hotstar clone built using React. The application is cont
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-repository-url/disney-hotstar-clone.git
+    git clone https://github.com/Gaurav1517/disney-hotstar-clone.git
     cd disney-hotstar-clone
     ```
 
