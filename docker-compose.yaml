@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  disney-hotstar:
+    build:
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
