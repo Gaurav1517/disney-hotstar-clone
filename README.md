@@ -5,6 +5,40 @@ Hotstar-Disney+ UI clone using ReactJS
 
 ![snap](src/images/snap.png)
 
+## Tools Used
+
+<a href="https://code.visualstudio.com/">
+  <img src="https://www.svgrepo.com/show/452129/vs-code.svg" alt="Visual Studio Code" width="100">
+</a>
+<a href="https://git-scm.com/">
+  <img src="https://www.svgrepo.com/show/452210/git.svg" alt="Git" width="100">
+</a>
+<a href="https://github.com">
+  <img src="https://www.svgrepo.com/show/475654/github-color.svg" alt="GitHub" width="100">
+</a>
+<a href="https://www.kernel.org">
+  <img src="https://www.svgrepo.com/show/354004/linux-tux.svg" alt="Linux" width="100">
+</a> 
+<a href="https://www.docker.com">
+  <img src="https://www.svgrepo.com/show/303231/docker-logo.svg" alt="Docker" width="100">
+</a> 
+<a href="https://nodejs.org/">
+  <img src="https://www.svgrepo.com/show/303360/nodejs-logo.svg" alt="Node.js" width="100">
+</a>
+<a href="https://reactjs.org/">
+  <img src="https://www.svgrepo.com/show/452092/react.svg" alt="React" width="100">
+</a>
+<a href="https://appmaster.io">
+  <img src="https://appmaster.io/cdn-cgi/image/width=1024,quality=83,format=auto/api/_files/GRAQVyUfLNhhruStNbXYef/download/" alt="AppMaster" width="100">
+</a>
+<a href="https://www.npmjs.com/">
+  <img src="https://www.svgrepo.com/show/452077/npm.svg" alt="npm" width="100">
+</a>
+<a href="https://www.openssl.org/">
+  <img src="https://www.svgrepo.com/show/473737/openssl.svg" alt="OpenSSL" width="100">
+</a>
+
+
 
 Most Simple Project you can do when ypu start studying ReactJS.It is only made using ReactJS.
 
