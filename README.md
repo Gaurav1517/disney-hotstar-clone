@@ -9,7 +9,7 @@ Most Simple Project you can do when ypu start studying ReactJS.It is only made u
 need to install git and npm in system
 
 ```
-git clone 
+git clone https://github.com/Gaurav1517/disney-hotstar-clone.git
 
 cd disney-hotstar-clone
 
@@ -24,8 +24,8 @@ npm start
 https://hotstar-88d5e.web.app
 
 
-# Run this code if getting error from above command 
-2 git clone https://github.com/gchauhan1517/disney-hotstar-clone
+# Run this code if getting error from above command  run this command to resolve error. 
+2 git clone https://github.com/Gaurav1517/disney-hotstar-clone.git
    3 cd disney-hotstar-clone
    4 npm i
    5 npm start
