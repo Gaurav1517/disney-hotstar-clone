@@ -24,9 +24,10 @@ npm start
 ```
 
 
+## OPTIONAL***
 
+# Run this code if you encounter an error with the above command. Use this command to resolve the issue. 
 
-# Run this code if getting error from above command  run this command to resolve error. 
 ```bash
 2 git clone https://github.com/Gaurav1517/disney-hotstar-clone.git
    3 cd disney-hotstar-clone
