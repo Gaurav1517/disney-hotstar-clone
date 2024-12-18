@@ -291,3 +291,6 @@ services:
 
 This will stop and remove the containers, network, and volumes created by Docker Compose.
 
+### Image-size
+![snap](src/images/image-size.png)
+
