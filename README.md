@@ -1,4 +1,4 @@
-# Disney Hotstar UI Clone - Dockerized Deployment with Jenkins, Kubernetes & Ansible
+# Disney Hotstar UI Clone: Dockerized Deployment with Jenkins, Kubernetes, and Ansible
 
 Hotstar-Disney+ UI clone using ReactJS
 ---
