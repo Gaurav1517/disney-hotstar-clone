@@ -1,9 +1,23 @@
+# **********Docker Compose file*********#
+# version: '3.8'
+# services:
+#   disney-hotstar:
+#     build:
+#       context: .
+#     ports:
+#       - "3000:3000"
+#     environment:
+#       - NODE_OPTIONS=--openssl-legacy-provider
+
+
+# **********Nginx Multistage Docker Compose file***********#
 version: '3.8'
 services:
   disney-hotstar:
     build:
       context: .
+      dockerfile: multiStageDockerfile
     ports:
-      - "3000:3000"
+      - "3000:80"
     environment:
       - NODE_OPTIONS=--openssl-legacy-provider
