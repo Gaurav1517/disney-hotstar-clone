@@ -10,7 +10,7 @@
 #       - NODE_OPTIONS=--openssl-legacy-provider
 
 
-# **********Nginx Multistage Docker Compose file***********#
+# **********Multistage Docker Compose file***********#
 version: '3.8'
 services:
   disney-hotstar:
