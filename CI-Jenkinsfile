@@ -1,0 +1,94 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_USERNAME = "gchauhan1517"     // Docker Hub credentials (ensure you have it in Jenkins credentials)
+        EMAIL_RECIPIENT = "gaurav.mau854@gmail.com" // Set the recipient email address
+    }
+
+    stages {
+        stage('Cleanup Workspace') {
+            steps {
+                cleanWs() // Cleans up the workspace before starting
+            }
+        }
+
+        stage('Git Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Gaurav1517/disney-hotstar-clone.git'
+            }
+        }
+
+        stage('Install Dependencies and Build React App') {
+            steps {
+                script {
+                    sh 'npm install'  // Install project dependencies
+                    sh 'npm run build'  // Build the React app
+                }
+            }
+        }
+
+        stage('Docker Image Build') {
+            steps {
+                script {
+                    def JOB = env.JOB_NAME.toLowerCase()  // Convert Jenkins Job name to lower-case
+                    // Build Docker image for the React app using the provided Dockerfile
+                    sh "docker build -t ${JOB}:${BUILD_NUMBER} -f multiStageDockerfile ."
+                }
+            }
+        }
+
+        stage('Docker Image Tag') {
+            steps {
+                script {
+                    def JOB = env.JOB_NAME.toLowerCase()  // Convert Jenkins Job name to lower-case
+                    sh "docker tag ${JOB}:${BUILD_NUMBER} ${DOCKER_USERNAME}/${JOB}:v${BUILD_NUMBER}"
+                    sh "docker tag ${JOB}:${BUILD_NUMBER} ${DOCKER_USERNAME}/${JOB}:latest"
+                }
+            }
+        }
+
+        stage('Docker Image Push') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'docker_user', passwordVariable: 'docker_pass')]) {
+                        // Login to Docker Hub
+                        sh "docker login -u '${docker_user}' -p '${docker_pass}'"
+                        def JOB = env.JOB_NAME.toLowerCase()
+                        // Push the image to Docker Hub
+                        sh "docker push ${docker_user}/${JOB}:v${BUILD_NUMBER}"
+                        sh "docker push ${docker_user}/${JOB}:latest"
+                    }
+                }
+            }
+        }
+
+        stage('Docker Image Cleanup') {
+            steps {
+                script {
+                    // Prune unused Docker images to free up space
+                    sh 'docker image prune -af'
+                }
+            }
+        }
+
+        stage('Docker Post-Build Email') {
+            steps {
+                script {
+                    def JOB = env.JOB_NAME.toLowerCase()
+                    def buildStatus = currentBuild.currentResult
+                    def message = buildStatus == 'SUCCESS' ? "Build and Docker push succeeded." : "Build or Docker push failed."
+                    // Send email with the build status and details
+                    emailext (
+                        subject: "Jenkins Build Result for ${JOB} - ${buildStatus}",
+                        body: """<h3>Build Status: ${buildStatus}</h3>
+                                <p>Docker image ${DOCKER_USERNAME}/${JOB}:${BUILD_NUMBER} has been built and pushed successfully.</p>
+                                <p>Build Log:</p>
+                                <pre>${message}</pre>""",
+                        to: "${EMAIL_RECIPIENT}"
+                    )
+                }
+            }
+        }
+    }
+}
