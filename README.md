@@ -58,7 +58,8 @@ npm start
 
 #  Dockerize Disney Hotstar Clone application
 
-This is a simple Disney Hotstar clone built using React. The application is containerized using Docker and can be easily run using Docker Compose.
+**Project Description**:  
+This project is a simple Disney Hotstar UI clone built using React. The application has been containerized using Docker to ensure consistency across environments and simplify deployment. A multi-stage Dockerfile is utilized to optimize the image size by separating the build and production stages. The production-ready application is served using NGINX, ensuring efficient performance. Additionally, Docker Compose is used to manage and run the containerized application effortlessly.
 
 ## Prerequisites
 
