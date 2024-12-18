@@ -1,0 +1,38 @@
+# Stage 1: Build the application
+FROM node:18-alpine AS build
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci --only=production
+
+# Copy the rest of the application
+COPY . .
+
+# Set Node.js environment variable to fix OpenSSL error
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+
+# Build the application
+RUN npm run build
+
+# Stage 2: Production (using NGINX)
+FROM nginx:alpine
+
+# Remove default NGINX configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy custom NGINX configuration
+COPY nginx.conf /etc/nginx/conf.d
+
+# Copy the build output from the previous stage to NGINX's web root
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
