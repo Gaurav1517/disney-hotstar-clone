@@ -37,7 +37,21 @@ Hotstar-Disney+ UI clone using ReactJS
 <a href="https://www.openssl.org/">
   <img src="https://www.svgrepo.com/show/473737/openssl.svg" alt="OpenSSL" width="100">
 </a>
-
+<a href="https://www.jenkins.io">
+  <img src="https://get.jenkins.io/art/jenkins-logo/logo.svg" alt="Jenkins" width="100">
+</a>
+<a href="https://github.com/tonistiigi/trivy">
+  <img src="https://trivy.dev/v0.46/imgs/logo.png" alt="Trivy" width="100">
+</a>
+<a href="https://nginx.org/">
+  <img src="https://www.svgrepo.com/show/354115/nginx.svg" alt="Trivy" width="100">
+</a>
+<a href="https://www.ansible.com">
+  <img src="https://www.svgrepo.com/show/353399/ansible.svg" alt="Ansible" width="100">
+</a>
+<a href="https://kubernetes.io">
+  <img src="https://www.svgrepo.com/show/376331/kubernetes.svg" alt="Kubernetes" width="100">
+</a>
 
 
 ## Installation
