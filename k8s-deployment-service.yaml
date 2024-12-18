@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hotstar-clone-deployment
+  labels:
+    app: hotstar-clone
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hotstar-clone
+  template:
+    metadata:
+      labels:
+        app: hotstar-clone
+    spec:
+      containers:
+        - name: hotstar-clone-container
+          image: gchauhan1517/app-nginx:latest  # Docker Hub image
+          ports:
+            - containerPort: 80
+          env:
+            - name: NODE_OPTIONS
+              value: "--openssl-legacy-provider"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotstar-clone-service
+spec:
+  selector:
+    app: hotstar-clone
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 80
+  type: NodePort
