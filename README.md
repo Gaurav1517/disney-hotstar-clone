@@ -1,4 +1,4 @@
-# Disney Hotstar UI Clone
+# Disney Hotstar UI Clone - Dockerized Deployment
 
 Hotstar-Disney+ UI clone using ReactJS
 ---
@@ -159,6 +159,135 @@ To stop the running containers and remove them, use the following command:
 ```bash
 docker-compose down
 ```
+
+## Multi-Stage Dockerfile 
+
+### Reasons for Using a Multi-Stage Dockerfile
+
+1. **Reduced Image Size**:  
+   - Only the essential files (e.g., static assets, configuration) are included in the final image, removing build tools and development dependencies.
+
+2. **Improved Security**:  
+   - By excluding unnecessary files and dependencies, the attack surface of the final image is minimized.
+
+3. **Optimized Build Process**:  
+   - Builds are separated into distinct stages (e.g., building the app and serving it). Each stage focuses on specific tasks, leading to cleaner and more efficient builds.
+
+4. **Reusability**:  
+   - The build stage can be reused for testing or debugging without impacting the production environment.
+
+5. **Performance**:  
+   - Using NGINX in the final stage provides faster and more efficient serving of static files compared to a Node.js server.
+
+6. **Cleaner Layer Structure**:  
+   - Multi-staging ensures that each stage has its own purpose, reducing unnecessary layers in the final image.
+
+
+multiStageDockerfile
+
+### **Stage 1: Build**
+```dockerfile
+FROM node:18-alpine AS build
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install production dependencies
+RUN npm ci --only=production
+
+# Copy the rest of the application
+COPY . .
+
+# Set Node.js environment variable to fix OpenSSL error
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+
+# Build the application
+RUN npm run build
+```
+#### Explanation:
+- **Base Image**: Uses the lightweight Node.js image `node:18-alpine` to reduce build size.
+- **Working Directory**: `/app` is the directory where the application code resides inside the container.
+- **Dependencies**: Installs only production dependencies using `npm ci --only=production` for faster, reliable builds.
+- **Static Build**: Generates production-ready static files using `npm run build`.
+
+### **Stage 2: Production**
+```dockerfile
+FROM nginx:alpine
+
+# Remove default NGINX configuration
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Copy custom NGINX configuration
+COPY nginx.conf /etc/nginx/conf.d
+
+# Copy the build output from the previous stage to NGINX's web root
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Expose port 80
+EXPOSE 80
+
+# Start NGINX
+CMD ["nginx", "-g", "daemon off;"]
+```
+#### Explanation:
+- **Base Image**: Uses the lightweight `nginx:alpine` image, optimized for serving static files.
+- **Custom Configuration**: Replaces the default NGINX configuration with `nginx.conf` for serving the React application.
+- **Static Files**: Copies only the build output from the first stage, keeping the final image small.
+- **Port**: Exposes port 80 for serving the application.
+- **Command**: Starts the NGINX server to serve the application.
+
+---
+
+### How to Build and Run
+
+#### Using Docker
+1. **Build the Docker Image**:
+   ```bash
+   docker build -t app-nginx -f multiStageDockerfile .
+   ```
+
+2. **Run the Docker Container**:
+   ```bash
+   docker run -p 3000:80 app-nginx
+   ```
+
+3. Open the application in your browser at `http://localhost:3000`.
+
+#### Using Docker Compose
+1. Update the `docker-compose.yaml` file as below.
+
+2. **Run the Application**:
+   ```bash
+   docker-compose up --build
+   ```
+
+---
+
+## Updated docker-compose.yaml File
+
+```yaml
+version: '3.8'
+services:
+  disney-hotstar:
+    build:
+      context: .
+      dockerfile: multiStageDockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - NODE_OPTIONS=--openssl-legacy-provider
+```
+
+### Explanation:
+- **`build.context`**: Specifies the directory containing the `multiStageDockerfile` and application files.
+- **`build.dockerfile`**: Explicitly points to the multi-stage Dockerfile.
+- **`ports`**: Maps port 80 inside the container to port 3000 on the host.
+- **`environment`**: Passes the `NODE_OPTIONS` environment variable during the build stage to resolve OpenSSL issues.
+
+
 
 This will stop and remove the containers, network, and volumes created by Docker Compose.
 
