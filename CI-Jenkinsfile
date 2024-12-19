@@ -1,17 +1,22 @@
 pipeline {
     agent any
 
-    environment {
+    tools {
+        nodejs 'nodejs' // Make sure this corresponds to Node.js v16+
+    }
+     environment {
+        // Disable CI environment variable to allow warnings during build
+        CI = 'false'
         DOCKER_USERNAME = "gchauhan1517"     // Docker Hub credentials (ensure you have it in Jenkins credentials)
-        EMAIL_RECIPIENT = "gaurav.mau854@gmail.com" // Set the recipient email address
     }
 
     stages {
+        
         stage('Cleanup Workspace') {
             steps {
-                cleanWs() // Cleans up the workspace before starting
+                cleanWs()
             }
-        }
+         }
 
         stage('Git Checkout') {
             steps {
@@ -19,15 +24,18 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies and Build React App') {
+        stage('Install Dependencies  React App') {
             steps {
-                script {
-                    sh 'npm install'  // Install project dependencies
-                    sh 'npm run build'  // Build the React app
-                }
+                sh 'npm ci --only=production' // Clean install for dependencies
             }
         }
-
+        
+         stage('Build React App'){
+            steps{
+                 sh 'npm run build'
+            }
+        }
+        
         stage('Docker Image Build') {
             steps {
                 script {
@@ -37,7 +45,6 @@ pipeline {
                 }
             }
         }
-
         stage('Docker Image Tag') {
             steps {
                 script {
