@@ -853,5 +853,5 @@ This CD pipeline ensures reliable and efficient deployment to your Kubernetes cl
 ## **Get acces application with kubernetes server ip and service port.**
 http://<<k8s-server:service-port/webapp>>
 
-![deployed-snap](Snap-k8s-CI-CD/deployed-snap.png)
+![deploy-snap](src/images/snap.png)
 
