@@ -23,7 +23,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Gaurav1517/disney-hotstar-clone.git'
             }
         }
-
+        
         stage('Install Dependencies  React App') {
             steps {
                 sh 'npm ci --only=production' // Clean install for dependencies
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     def JOB = env.JOB_NAME.toLowerCase()  // Convert Jenkins Job name to lower-case
                     // Build Docker image for the React app using the provided Dockerfile
-                    sh "docker build -t ${JOB}:${BUILD_NUMBER} -f multiStageDockerfile ."
+                    sh "docker build -t ${JOB}:${BUILD_NUMBER} -f jenkinsDockerfile ."
                 }
             }
         }
@@ -51,6 +51,16 @@ pipeline {
                     def JOB = env.JOB_NAME.toLowerCase()  // Convert Jenkins Job name to lower-case
                     sh "docker tag ${JOB}:${BUILD_NUMBER} ${DOCKER_USERNAME}/${JOB}:v${BUILD_NUMBER}"
                     sh "docker tag ${JOB}:${BUILD_NUMBER} ${DOCKER_USERNAME}/${JOB}:latest"
+                }
+            }
+        }
+
+        stage('Trivy Image Scan') {
+            // Scan Docker images for vulnerabilities 
+            steps{
+                script { 
+                  def JOB = env.JOB_NAME.toLowerCase() // Convert Jenkins Job name to lower-case
+                  sh "trivy image --format table ${DOCKER_USERNAME}/${JOB}:v${BUILD_NUMBER} -o ${JOB}-ImageReport.html"
                 }
             }
         }
