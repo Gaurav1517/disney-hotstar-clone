@@ -16,7 +16,7 @@ services:
   disney-hotstar:
     build:
       context: .
-      dockerfile: multiStageDockerfile
+      dockerfile: jenkinsDockerfile
     ports:
       - "3000:80"
     environment:
