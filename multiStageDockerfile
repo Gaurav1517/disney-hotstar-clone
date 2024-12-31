@@ -20,7 +20,7 @@
 #################****Jenkins-Dockerfile*****###########################
 FROM nginx:alpine
 LABEL maintainer.name="Gaurav Chauhan" \
-      maintainer.email="gauravchauhan0854@gmail.com" \
+      maintainer.email="username0854@gmail.com" \
       maintainer.spec="devops engineer"
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
