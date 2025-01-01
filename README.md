@@ -3,7 +3,7 @@
 Hotstar-Disney+ UI clone using ReactJS
 ---
 
-![snap](src/images/snap.png)
+![deploy-snap](src/images/deploy-snap.png)
 
 ## Tools Used
 
