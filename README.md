@@ -433,7 +433,7 @@ This will stop and remove the containers, network, and volumes created by Docker
     pip3 --version
     ansible --version
   ```
-![tools-configusre-jenkins-server](Snap-k8s-CI-CD/tools-confi-jenkins-server.png)
+![tools-configusre-jenkins-server](src/images/main-server-tools-conf.png)
 
 ## Login to jenkins server using public ip of jenkins server through port 8080
 ```bash
