@@ -2,9 +2,18 @@
 - name: Pull Kubernetes manifest files
   hosts: k8s-server
   tasks:
-    - name: Copy Kubernetes manifest files to the Node server
+    - name: Ensure the destination directory exists
+      file:
+        path: /root/k8s-manifest
+        state: directory
+        mode: '0755'
+
+    - name: Copy Kubernetes manifest files to the k8s-server
       copy:
-        src: "/var/lib/jenkins/workspace/{{ lookup('env', 'pipeline_name') }}/{{ item }}"  # Use environment variable for pipeline_name
+        src: "/var/lib/jenkins/workspace/{{ pipeline_name }}/{{ item }}"
         dest: "/root/k8s-manifest/{{ item }}"
+        owner: root
+        group: root
+        mode: '0644'
       with_items:
         - k8s-deployment-service.yaml
