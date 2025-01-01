@@ -450,7 +450,8 @@ Successfully set up Jenkins server and logged in.
 Next, proceed with installing plugins 
 # Install plugins 
 - **SSH Agent**
-- **Plugin Maven** 
+- **SSH Build Agents plugin**
+- **NodeJS Plugin** 
 - **Pipeline: Stage View Plugin** 
 
 # Configure credentials of docker hub, github, ansible-server in Jenkins Dashboard.
