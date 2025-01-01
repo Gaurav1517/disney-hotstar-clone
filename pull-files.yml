@@ -1,6 +1,6 @@
 ---
 - name: Pull Kubernetes manifest files
-  hosts: k8s-server  
+  hosts: k8s-server
   tasks:
     - name: Copy Kubernetes manifest files to the Node server
       copy:
