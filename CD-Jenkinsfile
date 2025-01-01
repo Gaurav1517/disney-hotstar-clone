@@ -2,19 +2,19 @@ pipeline {
     agent any
     // DECLARE THE VARIABLES HERE:
     environment {
-        NODE_IP = '192.168.157.137'  // Replace with your Node-Server private IP
+        NODE_IP = '192.168.157.143'  // Replace with your Node-Server private IP
         EC2_NAME = "root"             // Enter your AWS EC2 username
-        PIPELINE_NAME = "Disney-Hotstar-UI-Clone-CI-CD-Pipeline"  // Pipeline name
-        PROJECT_NAME = "DisneyHotstarUIClone"  // Project name
-        DOCKER_IMAGE = "gchauhan1517/disney-hotstar-ui-clone"  // Docker image name
+        PIPELINE_NAME = "hotstar-CI-Pipeline"  // CI Pipeline name
+       // PROJECT_NAME = "DisneyHotstarUIClone"  // Project name
+        DOCKER_IMAGE = "gchauhan1517/hotstar-ci-pipeline"  // Docker image name
     }
 
     stages {
         stage("1. Pull Files") {
             steps {
-                sshagent(['jenkins_server']) {
+                sshagent(['ansible-server']) {
                     // Execute Ansible playbook to pull files from the repository
-                    sh "ansible-playbook -i /etc/ansible/hosts -u ${EC2_NAME} -e pipeline_name=${PIPELINE_NAME} /var/lib/jenkins/workspace/Disney-Hotstar-UI-Clone-CI-CD-Pipeline/pull-files.yml"
+                    sh "ansible-playbook -i /etc/ansible/hosts -u ${EC2_NAME}  -e pipeline_name=${PIPELINE_NAME}  /var/lib/jenkins/workspace/hotstar-CI-Pipeline/pull-files.yml"
                 }
             }
         }
@@ -27,20 +27,14 @@ pipeline {
 
         stage("3. Deployment") {
             steps {
-                sshagent(['jenkins_server']) {
-                    // Step 1: Apply Kubernetes deployment
-                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/deployment.yml"
+                sshagent(['ansible-server']) {
+                    // Step 1: Apply Kubernetes deployment & service
+                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/k8s-deployment-service.yaml"
                     
-                    // Step 2: Apply Kubernetes service
-                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/service.yml"
+                    // Step 2: Rollout restart to apply the changes
+                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl rollout restart deploy hotstar-clone-deployment"
                     
-                    // Step 3: Deploy the new Docker image in Kubernetes
-                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl set image deployment/disney-hotstar-ui-clone disney-hotstar-ui-clone=${DOCKER_IMAGE}:latest"
-                    
-                    // Step 4: Rollout restart to apply the changes
-                    sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl rollout restart deploy disney-hotstar-ui-clone"
-                    
-                    // Step 5: Get Kubernetes services to verify deployment
+                    // Step 3: Get Kubernetes services to verify deployment
                     sh "ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl get service"
                 }
             }
