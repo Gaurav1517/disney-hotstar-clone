@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: hotstar-clone-container
-          image: gchauhan1517/app-nginx:latest  # Docker Hub image
+          image: gchauhan1517/hotstar-ci-pipeline:latest  # Docker Hub image
           ports:
             - containerPort: 80
           env:
