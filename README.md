@@ -443,7 +443,7 @@ need to get the Administrator Password from /var/lib/jenkins/secrets/initialAdmi
 ```bash
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
-![jenkins-login](Snap-k8s-CI-CD/jenkins-login.png)
+![jenkins-login](src/images/getpass-jenkins.png)
 
 Successfully set up Jenkins server and logged in.
 
@@ -497,7 +497,7 @@ Dashboard > Manage Jenkins > Credentials > System > Global credentials (unrestri
 6. ID: ansible-private-key.
 
 
-![credentials](Snap-k8s-CI-CD/credentials.png)
+![credentials](src/images/cred.png)
 
 To copy an SSH key to a Kubernetes server for Ansible SSH authentication, you can follow these steps:
 
@@ -565,7 +565,7 @@ Finally, test that Ansible can authenticate and connect to the Kubernetes server
 ```bash
 ansible k8s-server -m ping
 ```
-![archit-k8s-snap](Snap-k8s-CI-CD/ansible-ping.png)
+![archit-k8s-snap](src/images/ansible-ping.png)
 
 If everything is configured correctly, you should receive a successful "pong" response from Ansible.
 
@@ -651,7 +651,7 @@ If everything is configured correctly, you should receive a successful "pong" re
    ```bash
    kubectl get pods -A
    ```
-![tools-k8s-server](Snap-k8s-CI-CD/tools-k8s-server.png) 
+![tools-k8s-server](src/images/k8s-server-conf.png) 
 
 Here’s a description of the CI pipeline in your `Jenkinsfile` for inclusion in a `README.md` file:
 
@@ -761,10 +761,10 @@ emailext (
 
 This CI pipeline ensures seamless integration and deployment of your React-based Disney Hotstar UI Clone.
 
-![CI-pipeline](Snap-k8s-CI-CD/CI-Pipeline.png)
+![CI-pipeline](src/images/CI-pipeline.png)
 
 ## Registry docker image 
-![registry-image](Snap-k8s-CI-CD/registry-image.png)
+![registry-image](src/images/hub-docker-image.png)
 
 ## CD Pipeline Overview
 
@@ -800,28 +800,14 @@ input message: 'Approve deployment?'
 #### **3. Deployment**  
 **Purpose:** Deploys the application to the Kubernetes cluster using the following steps.  
 
-1. **Apply Kubernetes Deployment Manifest:**  
-   Deploys or updates the Kubernetes deployment configuration.  
+1. **Apply Kubernetes Deployment & Service Manifest:**  
+   Deploys or updates the Kubernetes deployment & service configuration.  
    **Command:**  
    ```sh
-   ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/deployment.yml
+   ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/k8s-deployment-service.yaml"
    ```
-
-2. **Apply Kubernetes Service Manifest:**  
-   Exposes the application using a Kubernetes service.  
-   **Command:**  
-   ```sh
-   ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl apply -f /root/k8s-manifest/service.yml
-   ```
-
-3. **Set Docker Image in Kubernetes Deployment:**  
-   Updates the Kubernetes deployment with the latest Docker image.  
-   **Command:**  
-   ```sh
-   ssh -o StrictHostKeyChecking=no ${EC2_NAME}@${NODE_IP} kubectl set image deployment/disney-hotstar-ui-clone disney-hotstar-ui-clone=${DOCKER_IMAGE}:latest
-   ```
-
-4. **Rollout Restart:**  
+   
+3. **Rollout Restart:**  
    Restarts the Kubernetes deployment to apply the changes.  
    **Command:**  
    ```sh
@@ -846,12 +832,12 @@ input message: 'Approve deployment?'
 
 This CD pipeline ensures reliable and efficient deployment to your Kubernetes cluster.
 
-![CD-Pipeline](Snap-k8s-CI-CD/CD-Pipeline.png)
+![CD-Pipeline](src/images/cd_pipeline.png)
 
-![deploy-service-pod](Snap-k8s-CI-CD/deploy-service-pod.png)
+![deploy-service-pod](src/images/svc-deploy-rs-pod.png)
 
 ## **Get acces application with kubernetes server ip and service port.**
-http://<<k8s-server:service-port/webapp>>
+http://<<k8s-server:service-port>>
 
-![deploy-snap](src/images/snap.png)
+![deploy-snap](src/images/deploy-snap.png)
 
