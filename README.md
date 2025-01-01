@@ -310,7 +310,7 @@ This will stop and remove the containers, network, and volumes created by Docker
 ![snap](src/images/image-size.png)
 
 ### Note: Setting Up Kubernetes Environment on AWS 
-#### Here's a step-by-step guide to set up Jenkins, Maven, and Docker on the **main server** and Kubernetes on a **secondary machine**:
+#### Here's a step-by-step guide to set up Jenkins, Trivy, Java, and Docker on the **main server** and Kubernetes on a **secondary machine**:
 
 ## **Main Server Setup: Jenkins, Java, Docker, Git, Ansible, Trivy**
 
